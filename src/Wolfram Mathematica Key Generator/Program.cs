@@ -30,7 +30,7 @@ namespace MathematicaKG
                 {
                     magicNumbers = new int[] { 10690, 12251, 17649, 24816, 33360, 35944, 36412, 42041, 42635, 44011, 53799, 56181, 58536, 59222, 61041 };
                 }
-                else if (software == "sm12")
+                else if (software == "sm12" || software == "sm13")
                 {
                     magicNumbers = new int[] { 4912, 4961, 22384, 24968, 30046, 31889, 42446, 43787, 48967, 61182, 62774 };
                 }
