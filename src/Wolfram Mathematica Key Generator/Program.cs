@@ -24,15 +24,53 @@ namespace MathematicaKG
             {
                 var activationKey = GenActivationKey();
                 int[] magicNumbers;
-                Console.Write("Product(mma11, mma12, mma13, sm12, sm13) > ");
+                Console.Write("Product(mma, sm) > ");
                 var software = Console.ReadLine();
-                if (software == "mma11" || software == "mma12" || software == "mma13")
+                var version = "";
+                if (software == "mma")
                 {
-                    magicNumbers = new int[] { 10690, 12251, 17649, 24816, 33360, 35944, 36412, 42041, 42635, 44011, 53799, 56181, 58536, 59222, 61041 };
+                    Console.Write("version(11, 12.3, 13) > ");
+                    version = Console.ReadLine();
+                    // orginal magic numbers: { 0x29C2, 0x2FDB, 0x44F1, 0x60F0, 0x8250, 0x8C68, 0x8E3C, 0xA439, 0xA68B, 0xABEB, 0xD227, 0xDB75, 0xE4A8, 0xE756, 0xEE71 }
+                    if (version == "11")
+                    {
+                        magicNumbers = new int[] { 0xD227, 0xDB75, 0xEE71, 0x29C2, 0x44F1, 0x8E3C, 0x60F0, 0xABEB, 0x8250, 0x8C68, 0xE756 };
+                    }
+                    else if (version=="12.3")
+                    {
+                        magicNumbers = new int[] { 0xD227, 0xDB75, 0xEE71, 0x29C2, 0x44F1, 0x8E3C, 0x60F0, 0xABEB, 0x8250, 0x8C68, 0xE756 };
+                    }
+                    else if (version == "13")
+                    {
+                        magicNumbers = new int[] { 0xDB75, 0xEE71, 0x29C2, 0x44F1, 0x8E3C, 0x60F0, 0xABEB, 0x8250, 0x8C68, 0xE756, 0xB4D0, 0xCD2D, 0x22DD, 0x66C0, 0xD54F, 0xB013, 0x5417 };
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Unsupported product: {software}{version}.");
+                        return;
+                    }
                 }
-                else if (software == "sm12" || software == "sm13")
+                else if (software == "sm")
                 {
-                    magicNumbers = new int[] { 4912, 4961, 22384, 24968, 30046, 31889, 42446, 43787, 48967, 61182, 62774 };
+                    Console.Write("version(12.2, 12.3, 13) > ");
+                    version = Console.ReadLine();
+                    if (version == "12.2")
+                    {
+                        magicNumbers = new int[] { 0xAB0B, 0x6188, 0xBF47, 0x1330, 0xF536, 0xA5CE, 0x755E, 0x1361, 0xEEFE, 0x7C91, 0x5770};
+                    }
+                    else if(version=="12.3")
+                    {
+                        magicNumbers = new int[] {0x6188,0xBF47, 0x1330, 0xF536, 0xA5CE, 0x755E, 0x1361, 0xEEFE, 0x7C91, 0x5770};
+                    }
+                    else if(version=="13")
+                    {
+                        magicNumbers = new int[] {0xBF47, 0x1330, 0xF536, 0xA5CE, 0x755E, 0x1361, 0xEEFE, 0x7C91, 0x5770, 0x7C53, 0x64EC, 0x73EE, 0x4209, 0x8C72};
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Unsupported product: {software}{version}.");
+                        return;
+                    }
                 }
                 else
                 {
@@ -40,7 +78,7 @@ namespace MathematicaKG
                     return;
                 }
                 Random rnd = new();
-                var magicNumber = magicNumbers[(int)Math.Floor(rnd.NextDouble() * magicNumbers.Length)];
+                var magicNumber = magicNumbers[rnd.Next(magicNumbers.Length)];
                 var password = GenPassword(mathId + "$1&" + activationKey, magicNumber);
                 Console.WriteLine($"Activation Key:\t {activationKey}");
                 Console.WriteLine($"Password:\t {password}");
@@ -90,7 +128,7 @@ namespace MathematicaKG
             Random rnd = new();
             for (var i = 0; i < 14; i++)
             {
-                s += Math.Floor(rnd.NextDouble() * 10);
+                s += rnd.Next(10);
                 if (i == 3 || i == 7)
                     s += "-";
             }
